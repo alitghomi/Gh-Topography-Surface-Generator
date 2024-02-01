@@ -1,3 +1,6 @@
 # ignore all .txt and .ai files
 *.txt
 *.ai
+
+#this file contain multiple python scripts. one is a source code, the other one is to compile and the 3rd one is the component. It's confusing so I made one that only has the source code
+topography-final.gh
