@@ -33,4 +33,7 @@ A series of curves following the topography in v direction
 ### Notes
 - The code is developed and tested in Rhino 7
 - The code is written in Grasshopper default Python component.
-- The current version calculates the surface points' height based on a weighted average of its distance to the topography curves. This results in a linear change in height. Probebly a non-leniear fomula would fill the gaps more naturally but that's for another day.
+- The current version calculates the surface points' height based on a weighted average of its distance to the topography curves. This results in a linear change in height. Probebly a non-leniear formula would fill the gaps more naturally but that's for another day.
+
+### Demostrtion
+![](https://github.com/alitghomi/Gh-Topography-Surface-Generator/blob/main/assets/Topo%20Generator.gif)
