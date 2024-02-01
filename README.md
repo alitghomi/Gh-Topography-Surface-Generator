@@ -7,7 +7,7 @@
 
 ## How to use
 ### How to open
-You can drag and drop the .ghpy file inside the component folder into the Grasshopper environment. You'll can then find the component in the AliT Toolkit > Site in the Grasshopper tabs. Or you can use the source .gh file in the /source code folder.
+You can drag and drop the .ghpy file inside the component folder into the Grasshopper environment. Then you can find the component in the AliT Toolkit > Site in the Grasshopper tabs. Or you can use the source .gh file in the /source code folder.
 
 ### Inputs
 #### topo_curves
