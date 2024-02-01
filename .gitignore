@@ -1,0 +1,3 @@
+# ignore all .txt and .ai files
+*.txt
+*.ai
