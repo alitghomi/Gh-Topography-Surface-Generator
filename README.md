@@ -24,11 +24,6 @@ An approximate distance between control points. Smaller number results in a more
 #### topo_surface
 A NURBS surface generated from the network of u_curves and v_curves.
 
-#### u_curves
-A series of curves following the topography in u direction
-
-#### v_curves
-A series of curves following the topography in v direction
 
 ### Notes
 - The code is developed and tested in Rhino 7
