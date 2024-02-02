@@ -10,11 +10,14 @@ ghenv.Component.Name = "Topo Generator"
 ghenv.Component.NickName = "Topo Generator"
 ghenv.Component.Category = "AliT Toolkit"
 ghenv.Component.SubCategory = "Site"
-ghenv.Component.Description = "Generates a topography surface from series of curves. \nThe curves should be in their actual Z hight and for better results they should connect to the boundary curve in plan if they are not closed. \nThe grid_size is an approximation."
+ghenv.Component.Description = "Generates a topography surface from series of curves."
 
 #------------------------------------------------------------------
+#Project the boundary curve
+projected_boundary_curve = Rhino.Geometry.Curve.ProjectToPlane(boundary_crv, rs.PlaneFromNormal([0,0,0],[0,0,1]))
+
 #Generating the surface points based on the boundary
-srf = rs.AddPlanarSrf(boundary_crv)
+srf = rs.AddPlanarSrf([projected_boundary_curve])
 u_domain = rs.SurfaceDomain(srf,0)
 v_domain = rs.SurfaceDomain(srf,1)
 surface_points = []
@@ -129,57 +132,26 @@ for k,v in srf_pts_closest_topo_project_pts.items():
         weights = []
         dists = []
         heights = []
-        for id in topo_ids:
-            dist = srf_pts_closest_distances[k][id]
-            heights.append(topo_heights[id])
-            dists.append(dist)
-        for i in range(len(dists)):
-            weight = 1/(dists[i]/sum(dists))
-            weights.append(weight)
-        for i in range(len(dists)):
-            weighted_Zs.append(heights[i]*weights[i]/sum(weights))
-        final_z = sum(weighted_Zs)
+        if len(topo_ids) > 0:
+            for id in topo_ids:
+                dist = srf_pts_closest_distances[k][id]
+                heights.append(topo_heights[id])
+                dists.append(dist)
+            for i in range(len(dists)):
+                weight = 1/(dists[i]/sum(dists))
+                weights.append(weight)
+            for i in range(len(dists)):
+                weighted_Zs.append(heights[i]*weights[i]/sum(weights))
+            final_z = sum(weighted_Zs)
+        else:
+            final_z = topo_heights[id]
+        
     #construct new points
     final_pt = rs.AddPoint(surface_points[k][0],surface_points[k][1],final_z)
+    
     topo_points.append(final_pt)
     
-topo_surface  = topo_points
 #-----------------------------------------------------------------------------------------------------------
-#Creating the topo surface iso curves
-
-def curves_from_rows(pts_rows):
-    curves = []
-    for i in range(len(pts_rows)):
-        crv = rs.AddInterpCurve(pts_rows[i])
-        curves.append(crv)
-    return curves
-
-#Partition the point list into rows
-def partition(lst, size):
-    sublists = [lst[i:i + size] for i in range(0, len(lst), size)]
-    return sublists
-
-def flip_matrix(list_of_lists):
-    new_list_of_lists = []
-    for i in range(len(list_of_lists[0])):
-        new_list = []
-        for l in list_of_lists:
-            new_list.append(l[i])
-        new_list_of_lists.append(new_list)
-    return new_list_of_lists
-    
-points_in_rows = list(partition(topo_points,v_count+1))
-u_curves = curves_from_rows(points_in_rows)
-
-flipped_points_in_rows = flip_matrix(points_in_rows)
-v_curves = curves_from_rows(flipped_points_in_rows)
-
-#----------------------------------------------------------------------
-#Generating the surface
-
-all_crvs = []
-all_crvs.extend(u_curves)
-all_crvs.extend(v_curves)
-
-topo_srf = rs.AddNetworkSrf(all_crvs)
+topo_srf = rs.AddSrfControlPtGrid([u_count+1,v_count+1],topo_points)
 topo_surface = topo_srf
+
