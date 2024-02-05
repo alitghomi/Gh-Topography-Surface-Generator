@@ -7,7 +7,7 @@
 
 ## How to use
 ### How to open
-You can drag and drop the .ghpy file inside the component folder into the Grasshopper environment. Then you can find the component in the AliT Toolkit > Site in the Grasshopper tabs. Or you can use the source .gh file in the /source code folder.
+You can drag and drop the .ghpy file inside the "component" folder into the Grasshopper environment. Then you can find the component in the "AliT Toolkit > Site" in the Grasshopper tabs. Or you can use the source .gh file in the "source code" folder.
 
 ### Inputs
 #### topo_curves
@@ -22,7 +22,7 @@ An approximate distance between control points. Smaller number results in a more
 ### Outputs
 
 #### topo_surface
-A NURBS surface generated from the network of u_curves and v_curves.
+A NURBS surface generated from control pointes at the topography heights.
 
 
 ### Notes
